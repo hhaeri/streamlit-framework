@@ -1,9 +1,8 @@
 pandas
 plotly
 altair
-bokehbokeh
+bokeh
 requests
 streamlit
 python-dotenv
 yfinance
-
