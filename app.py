@@ -120,17 +120,35 @@ else:
     
 p.y_range = Range1d(miny, maxy)
 
-# Format the tooltip
-tooltips = [
-            ('Date','@x{%F}'),
-            ('Closing price', '@y'),
-           ]
-# Add the HoverTool to the figure
-p.add_tools(HoverTool(tooltips=tooltips),formatters={'@x': 'datetime'})
 
+# Add the HoverTool to the figure
+# Format the tooltip
+HoverTool(
+    tooltips=[
+        ( 'date',   '@x{%F}'            ),
+        ( 'close',  '$@y{%0.2f}' ), # use @{ } for field names with spaces
+    ],
+
+    formatters={
+        '@x'        : 'datetime', # use 'datetime' formatter for '@date' field
+        '@y' : 'printf',   # use 'printf' formatter for '@y' field
+                                     # use default 'numeral' formatter for other fields
+    },
+
+    # display a tooltip whenever the cursor is vertically in line with a glyph
+    mode='vline'
+)
+p.add_tools(HoverTool)
+
+#simple tooltip
+# tooltips = [
+#             ('Date','@x{%F}'),
+#             ('Closing price', '@y'),
+#            ]
+# Add the HoverTool to the figure
+# p.add_tools(HoverTool(tooltips=tooltips,formatters={'@x': 'datetime'}))
 
 p.line(x, y)
-
 # show(p)
 st.bokeh_chart(p)
 
