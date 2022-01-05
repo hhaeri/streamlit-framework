@@ -122,8 +122,8 @@ p.y_range = Range1d(miny, maxy)
 
 # Format the tooltip
 tooltips = [
-            ('Date','@Date'),
-            ('Closing price', '@Data'),
+            ('Date','@x'),
+            ('Closing price', '@y'),
            ]
 # Add the HoverTool to the figure
 p.add_tools(HoverTool(tooltips=tooltips))
