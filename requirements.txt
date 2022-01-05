@@ -5,5 +5,5 @@ bokeh
 requests
 streamlit
 python-dotenv
-
+yfinance
 
