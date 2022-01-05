@@ -12,6 +12,11 @@ A [finished example](https://streamlit-12day-example.herokuapp.com/) that demons
 
 ## Step 1: Setup and deploy
 	• MY NOTE: I use git bash instead of the conda terminal or terminal, there was some login issue to heroku when I try the others.
+	• MY NOTE: I also used this workaround in order to be able to login in regular conda command promt: 
+	cmd>set HomeDrive=C:\Users\hhaeri
+	run heroku login again
+when 	when finished it will create _netrc in directory C:\Users\hhaeri
+	https://stackoverflow.com/questions/61760769/heroku-cli-login-is-failing-with-error-error-enoent-no-such-file-or-directory
 - Git clone the existing template repository.
 - `Procfile`, `requirements.txt`, and `setup.py` contain some default settings. If you want, you can change the email address in `setup.py` to your own, but it won't affect anything in the app.
 
@@ -27,8 +32,8 @@ A [finished example](https://streamlit-12day-example.herokuapp.com/) that demons
 - You should be able to see your site at `https://<app_name>.herokuapp.com`
 
 	• MY NOTE: I had to change the requirement.txt file locally and then commit/push to github. These are the things I had to change/add:
-		? Bokeh==2.4.1, by default heroku install the latest package which is 2.4.2 however streamlit is only working with bokeh version 2.4.1 so far
-		? Yfinance: this package was not included in the original requirements.txt file but was needed for my app
+		1. Bokeh==2.4.1, by default heroku install the latest package which is 2.4.2 however streamlit is only working with bokeh version 2.4.1 so far
+		2. Yfinance: this package was not included in the original requirements.txt file but was needed for my app
 
 - A useful reference is the Heroku [quickstart guide](https://devcenter.heroku.com/articles/getting-started-with-python-o).
 
