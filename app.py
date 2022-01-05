@@ -10,13 +10,10 @@ import requests
 import pandas as pd
 import streamlit as st
 from bokeh.plotting import figure
-from bokeh.io import output_file, show
 # importing range1d from
 # bokeh.models in order to change
 # the X-Axis and Y-Axis ranges
 from bokeh.models import Range1d
-import csv
-import requests
 import yfinance as yf
 
 my_apikey = '8G2941CYJGUYUU6A'
@@ -97,7 +94,6 @@ data = yf.download(  # or pdr.get_data_yahoo(...
         proxy = None
     )
 
-# data.index = pd.to_datetime(data.index)
 
 x = data.index.tolist()
 y = data['Close'].tolist()
