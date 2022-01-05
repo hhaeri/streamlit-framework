@@ -1,7 +1,7 @@
 pandas
 plotly
 altair
-bokeh
+bokehbokeh==2.4.1
 requests
 streamlit
 python-dotenv
