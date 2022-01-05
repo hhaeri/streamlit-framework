@@ -99,7 +99,7 @@ x = data.index.tolist()
 y = data['Close'].tolist()
 
 p = figure(
-      title=f'Price History of {selected_ticker} to date\n Timeframe {selected_period} Interval {selected_interval}',
+      title=f'Price History of {selected_ticker} to date\n  {selected_period} Period, {selected_interval} Interval',
       x_axis_label='Date',
       y_axis_label='Closing Price in USD $', 
       x_axis_type="datetime",
@@ -123,7 +123,7 @@ p.y_range = Range1d(miny, maxy)
 
 # Add the HoverTool to the figure
 # Format the tooltip
-HoverTool(
+p.add_tools(HoverTool(
     tooltips=[
         ( 'date',   '@x{%F}'            ),
         ( 'close',  '$@y{%0.2f}' ), # use @{ } for field names with spaces
@@ -137,9 +137,7 @@ HoverTool(
 
     # display a tooltip whenever the cursor is vertically in line with a glyph
     mode='vline'
-)
-p.add_tools(HoverTool)
-
+))
 #simple tooltip
 # tooltips = [
 #             ('Date','@x{%F}'),
