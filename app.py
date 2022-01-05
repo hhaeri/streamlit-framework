@@ -13,7 +13,7 @@ from bokeh.plotting import figure
 # importing range1d from
 # bokeh.models in order to change
 # the X-Axis and Y-Axis ranges
-from bokeh.models import Range1d
+from bokeh.models import Range1d, HoverTool
 import yfinance as yf
 
 my_apikey = '8G2941CYJGUYUU6A'
@@ -119,6 +119,14 @@ else:
     maxy = 2000
     
 p.y_range = Range1d(miny, maxy)
+
+# Format the tooltip
+tooltips = [
+            ('Date','@Date'),
+            ('Closing price', '@Data'),
+           ]
+# Add the HoverTool to the figure
+p.add_tools(HoverTool(tooltips=tooltips))
 
 
 p.line(x, y)
