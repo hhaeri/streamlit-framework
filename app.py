@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan  3 12:39:06 2022
-
+Created on Mon Jan  6 12:39:06 2022
 @author: hhaeri
+
+This is a simple app created by Hanieh Haeri for The Data Incubator milestone project using streamlit. 
+It uses Python Requests libaray along with YFinance Data and plots historical prices for a selected stock to date.
+
 """
 
 import csv
@@ -16,7 +19,17 @@ from bokeh.plotting import figure
 from bokeh.models import Range1d, HoverTool, ColumnDataSource
 import yfinance as yf
 
-st.set_page_config(layout="wide")
+#############################################################################
+st.set_page_config(
+      page_title="hhaeri_milestone_app",
+      page_icon=":)",
+      layout="wide",
+      initial_sidebar_state="expanded",
+      menu_items={
+          'Get Help': 'https://app.thedataincubator.com/12day.html',
+          'About': "# This is first app I ever created!"
+      }
+  )
 
 st.markdown("""
 <style>
@@ -48,19 +61,6 @@ with requests.Session() as s:
 #        print(row)
 
 api_list = pd.DataFrame(my_list).iloc[1::,0].tolist()
-#############################################################################
-#Unused section
-# st.set_page_config(
-#      page_title="hhaeri_milestone_app",
-#      page_icon="🧊",
-#      layout="wide",
-#      initial_sidebar_state="expanded",
-#      menu_items={
-#          'Get Help': 'https://www.extremelycoolapp.com/help',
-#          'Report a bug': "https://www.extremelycoolapp.com/bug",
-#          'About': "# This is a header. This is an *extremely* cool app!"
-#      }
-#  )
 #############################################################################
 #Configuring the title and sidebar for the app created by streamlit
 
