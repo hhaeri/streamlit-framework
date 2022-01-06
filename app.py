@@ -13,7 +13,7 @@ from bokeh.plotting import figure
 # importing range1d from
 # bokeh.models in order to change
 # the X-Axis and Y-Axis ranges
-from bokeh.models import Range1d, HoverTool
+from bokeh.models import Range1d, HoverTool, ColumnDataSource
 import yfinance as yf
 
 my_apikey = '8G2941CYJGUYUU6A'
@@ -94,9 +94,14 @@ data = yf.download(  # or pdr.get_data_yahoo(...
         proxy = None
     )
 
+data2 = data.reset_index()
 
-x = data.index.tolist()
-y = data['Close'].tolist()
+source = ColumnDataSource(data={
+    'date'      : data2.iloc[:,0],
+    'adj close' : data2.iloc[:,4],
+    'volume'    : data2.iloc[:,5],
+})
+
 
 p = figure(
       title=f'Price History of {selected_ticker} to date\n  {selected_period} Period, {selected_interval} Interval',
@@ -105,48 +110,24 @@ p = figure(
       x_axis_type="datetime",
       plot_width=1000,
       plot_height=600)
+p.line(x='date', y='adj close', line_width=2, color='#ebbd5b', source=source)
 
-# With the help of x_range and
-# y_range functions I am setting
-# up the range of both the axis
-
-#p.x_range = Range1d(20, 25)
-# miny = min(float(x) for x in y)
-miny = 0
-if len(x)>0:
-    maxy = max(float(x) for x in y)+100
-else:
-    maxy = 2000
-    
-p.y_range = Range1d(miny, maxy)
-
-
-# Add the HoverTool to the figure
-# Format the tooltip
 p.add_tools(HoverTool(
     tooltips=[
-        ( 'date',   '@x{%F}'            ),
-        ( 'close',  '$@y{%0.2f}' ), # use @{ } for field names with spaces
+        ( 'date',   '@date{%F}'            ),
+        ( 'close',  '$@{adj close}{0.2f}' ), # use @{ } for field names with spaces
+        ( 'volume', '@volume{0.00 a}'      ),
     ],
 
     formatters={
-        '@x'        : 'datetime', # use 'datetime' formatter for '@date' field
-        '@y' : 'printf',   # use 'printf' formatter for '@y' field
-                                     # use default 'numeral' formatter for other fields
+        '@date'      : 'datetime', # use 'datetime' formatter for 'date' field
+        'adj close' : 'printf',   # use 'printf' formatter for 'adj close' field
+                                  # use default 'numeral' formatter for other fields
     },
 
     # display a tooltip whenever the cursor is vertically in line with a glyph
     mode='vline'
 ))
-#simple tooltip
-# tooltips = [
-#             ('Date','@x{%F}'),
-#             ('Closing price', '@y'),
-#            ]
-# Add the HoverTool to the figure
-# p.add_tools(HoverTool(tooltips=tooltips,formatters={'@x': 'datetime'}))
 
-p.line(x, y)
-# show(p)
 st.bokeh_chart(p)
 
