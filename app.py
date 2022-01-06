@@ -16,16 +16,29 @@ from bokeh.plotting import figure
 from bokeh.models import Range1d, HoverTool, ColumnDataSource
 import yfinance as yf
 
+st.set_page_config(layout="wide")
+
+st.markdown("""
+<style>
+.big-font {
+    font-size:30px !important;
+.medium-font {
+    font-size:20px !important;
+.small-font {
+    font-size:20px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+#############################################################################
+#This API returns a list of active or delisted US stocks and ETFs, either as of the latest trading day or at a 
+#specific time in history. The endpoint is positioned to facilitate equity research on asset lifecycle and survivorship.
+
 my_apikey = '8G2941CYJGUYUU6A'
 url = 'https://www.alphavantage.co/query'
 function='LISTING_STATUS'
 parameters1 = {'function':function,'apikey':my_apikey}
-
-
-#This API returns a list of active or delisted US stocks and ETFs, either as of the latest trading day or at a specific time
-# in history. The endpoint is positioned to facilitate equity research on asset lifecycle and survivorship.
-
-
 with requests.Session() as s:
     download = s.get(url,params = parameters1)
     decoded_content = download.content.decode('utf-8')
@@ -35,30 +48,56 @@ with requests.Session() as s:
 #        print(row)
 
 api_list = pd.DataFrame(my_list).iloc[1::,0].tolist()
+#############################################################################
+#Unused section
+# st.set_page_config(
+#      page_title="hhaeri_milestone_app",
+#      page_icon="🧊",
+#      layout="wide",
+#      initial_sidebar_state="expanded",
+#      menu_items={
+#          'Get Help': 'https://www.extremelycoolapp.com/help',
+#          'Report a bug': "https://www.extremelycoolapp.com/bug",
+#          'About': "# This is a header. This is an *extremely* cool app!"
+#      }
+#  )
+#############################################################################
+#Configuring the title and sidebar for the app created by streamlit
 
-##################################
-# Create Select Widgets using Streamlit
+st.title("The Data Incubator Milestone Project")
+st.markdown('<p class="big-font">Hanieh Haeri </p>', unsafe_allow_html=True)
+
+st.sidebar.markdown('<p class="medium-font">The Data Incubator Milestone Project</p> Hanieh Haeri </p>', unsafe_allow_html=True)
+
+
+st.sidebar.markdown('<p class="small-font">This is a simple app created by streamlit. It uses Python Requests libarary\
+                    along with YFinance\ Data and plots historical prices for a selected stock to date</p> \
+                        Comments? <p>Email: hhaeri0911@gmail.com</p>', unsafe_allow_html=True)
+
+#############################################################################
+# Creating Select Widgets using Streamlit
 
 #Select Widget for Ticker
-selected_ticker = st.selectbox(
+selected_ticker = st.sidebar.selectbox(
      'Select Ticker Symbol',
      api_list)
 
 #Select Widget for Period
-selected_period = st.selectbox(
+selected_period = st.sidebar.selectbox(
      'Select - Retrieve Past Data Timeframe',
      ["1d","1mo","3mo","6mo","1y","5y","10y","ytd","max"])
 
 #Select Widget for Interval
-selected_interval = st.selectbox(
+selected_interval = st.sidebar.selectbox(
      'Select - Retrieve Interval',
      ["30m","1h","1d","5d","1wk","1mo","3mo"])
 
-
-
-
+#############################################################################
+#Fetching the stock data from yfinance
+###
+#Use the following format to fetch a specific period between two dates
 # data = yf.download("SPY AAPL", start="2017-01-01", end="2017-04-30")
-
+###
 data = yf.download(  # or pdr.get_data_yahoo(...
         # tickers list or string as well
         tickers = selected_ticker,
@@ -93,6 +132,8 @@ data = yf.download(  # or pdr.get_data_yahoo(...
         # (optional, default is None)
         proxy = None
     )
+#############################################################################
+#Creating the chart using bokeh
 
 data2 = data.reset_index()
 
