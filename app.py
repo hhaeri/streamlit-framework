@@ -27,7 +27,7 @@ st.set_page_config(
       initial_sidebar_state="expanded",
       menu_items={
           'Get Help': 'https://app.thedataincubator.com/12day.html',
-          'About': "# This is first app I ever created!"
+          'About': "# Welcome to my first app!"
       }
   )
 
@@ -71,7 +71,7 @@ st.sidebar.markdown('<p class="medium-font">The Data Incubator Milestone Project
 
 
 st.sidebar.markdown('<p class="small-font">This is a simple app created by streamlit. It uses Python Requests libarary\
-                    along with YFinance\ Data and plots historical prices for a selected stock to date</p> \
+                    along with YFinance Data and plots historical prices for a selected stock to date</p> \
                         Comments? <p>Email: hhaeri0911@gmail.com</p>', unsafe_allow_html=True)
 
 #############################################################################
